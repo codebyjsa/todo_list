@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const todoValue = document.getElementById("todoText");
+    const searchInput = document.getElementById("searchInput");
     const todoAlert = document.getElementById("Alert");
     const listItems = document.getElementById("list-items");
     const addUpdate = document.getElementById("AddUpdateClick");
@@ -39,7 +40,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function ReadToDoItems() {
+        listItems.innerHTML = ""; // Clear existing items
         todo.forEach(element => {
+            let li = document.createElement("li");
+            let style = element.status ? "style='text-decoration: line-through'" : "";
+            const todoItems = `
+                <div ${style} title="Hit Double Click and Complete" ondblclick="CompletedToDoItems(this)">
+                    ${element.item}
+                    ${style ? '<img class="todo-controls" src="https://cdn.pixabay.com/photo/2017/01/31/17/55/check-mark-2025986_960_720.png" />' : ""}
+                </div>
+                <div>
+                    ${!style ? '<img class="edit todo-controls" onclick="UpdateToDoItems(this)" src="https://cdn.pixabay.com/photo/2016/12/16/12/44/pencil-1911312_960_720.png" />' : ""}
+                    <img class="delete todo-controls" onclick="DeleteToDoItems(this)" src="https://cdn.pixabay.com/photo/2022/02/03/19/12/trash-icon-6991161_960_720.png" />
+                </div>`;
+            li.innerHTML = todoItems;
+            listItems.appendChild(li);
+        });
+    }
+
+    function filterToDoItems(query) {
+        const filteredToDo = todo.filter(item => item.item.toLowerCase().includes(query.toLowerCase()));
+        listItems.innerHTML = "";
+        filteredToDo.forEach(element => {
             let li = document.createElement("li");
             let style = element.status ? "style='text-decoration: line-through'" : "";
             const todoItems = `
@@ -137,5 +159,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     addUpdate.addEventListener("click", CreateToDoItems);
+    searchInput.addEventListener("input", (e) => filterToDoItems(e.target.value));
     ReadToDoItems();
 });
