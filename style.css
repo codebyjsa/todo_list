@@ -17,7 +17,7 @@ body {
   .container {
     background: #ffffff;
     padding: 20px;
-    width: 550px;
+    width: 856px;
     border-radius: 10px;
   }
 
@@ -37,7 +37,19 @@ body {
     border-radius: 30px;
     padding-left: 20px;
     margin-bottom: 25px;
+    padding-right: 10px; /* Added space for search input */
   }
+  
+  .todo-body input#searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 15px 0;
+    font-size: 20px;
+    margin-right: 10px; /* Spacing between search and add input */
+  }
+  
   
   .todo-body input {
     flex: 1;
